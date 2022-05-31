@@ -3,6 +3,7 @@ package com.example.cinema.service;
 import com.example.cinema.entity.MovieFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * (MovieFile)表服务接口
