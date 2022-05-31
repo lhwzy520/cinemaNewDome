@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.dao.MovieClassifyDao">
+
+    <resultMap type="com.example.cinema.entity.MovieClassify" id="MovieClassifyMap">
+        <result property="filmClassifyId" column="film_classify_id" jdbcType="VARCHAR"/>
+        <result property="filmClassifyName" column="film_classify_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MovieClassifyMap">
+        select
+          film_classify_id, film_classify_name
+        from movie_classify
+        where film_classify_id = #{filmClassifyId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MovieClassifyMap">
+        select
+          film_classify_id, film_classify_name
+        from movie_classify
+        <where>
+            <if test="MovieClassifyMap.filmClassifyId != null and MovieClassifyMap.filmClassifyId != ''">
+                and film_classify_id = #{MovieClassifyMap.filmClassifyId}
+            </if>
+            <if test="MovieClassifyMap.filmClassifyName != null and MovieClassifyMap.filmClassifyName != ''">
+                and film_classify_name = #{MovieClassifyMap.filmClassifyName}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from movie_classify
+        <where>
+            <if test="filmClassifyId != null and filmClassifyId != ''">
+                and film_classify_id = #{filmClassifyId}
+            </if>
+            <if test="filmClassifyName != null and filmClassifyName != ''">
+                and film_classify_name = #{filmClassifyName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="filmClassifyId" useGeneratedKeys="true">
+        insert into movie_classify(film_classify_name)
+        values (#{filmClassifyName})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="filmClassifyId" useGeneratedKeys="true">
+        insert into movie_classify(film_classify_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.filmClassifyName})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="filmClassifyId" useGeneratedKeys="true">
+        insert into movie_classify(film_classify_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.filmClassifyName})
+        </foreach>
+        on duplicate key update
+        film_classify_name = values(film_classify_name)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_classify
+        <set>
+            <if test="filmClassifyName != null and filmClassifyName != ''">
+                film_classify_name = #{filmClassifyName},
+            </if>
+        </set>
+        where film_classify_id = #{filmClassifyId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_classify where film_classify_id = #{filmClassifyId}
+    </delete>
+
+</mapper>
+

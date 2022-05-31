@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.dao.MovieFilmHistoryDao">
+
+    <resultMap type="com.example.cinema.entity.MovieFilmHistory" id="MovieFilmHistoryMap">
+        <result property="historyId" column="history_id" jdbcType="VARCHAR"/>
+        <result property="filmHistoryId" column="film_history_id" jdbcType="VARCHAR"/>
+        <result property="filmTime" column="film_time" jdbcType="VARCHAR"/>
+        <result property="filmUserId" column="film_user_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MovieFilmHistoryMap">
+        select
+          history_id, film_history_id, film_time, film_user_id
+        from movie_film_history
+        where history_id = #{historyId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MovieFilmHistoryMap">
+        select
+          history_id, film_history_id, film_time, film_user_id
+        from movie_film_history
+        <where>
+            <if test="MovieFilmHistoryMap.historyId != null and MovieFilmHistoryMap.historyId != ''">
+                and history_id = #{MovieFilmHistoryMap.historyId}
+            </if>
+            <if test="MovieFilmHistoryMap.filmHistoryId != null and MovieFilmHistoryMap.filmHistoryId != ''">
+                and film_history_id = #{MovieFilmHistoryMap.filmHistoryId}
+            </if>
+            <if test="MovieFilmHistoryMap.filmTime != null and MovieFilmHistoryMap.filmTime != ''">
+                and film_time = #{MovieFilmHistoryMap.filmTime}
+            </if>
+            <if test="MovieFilmHistoryMap.filmUserId != null and MovieFilmHistoryMap.filmUserId != ''">
+                and film_user_id = #{MovieFilmHistoryMap.filmUserId}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from movie_film_history
+        <where>
+            <if test="historyId != null and historyId != ''">
+                and history_id = #{historyId}
+            </if>
+            <if test="filmHistoryId != null and filmHistoryId != ''">
+                and film_history_id = #{filmHistoryId}
+            </if>
+            <if test="filmTime != null and filmTime != ''">
+                and film_time = #{filmTime}
+            </if>
+            <if test="filmUserId != null and filmUserId != ''">
+                and film_user_id = #{filmUserId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="historyId" useGeneratedKeys="true">
+        insert into movie_film_history(film_history_id, film_time, film_user_id)
+        values (#{filmHistoryId}, #{filmTime}, #{filmUserId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="historyId" useGeneratedKeys="true">
+        insert into movie_film_history(film_history_id, film_time, film_user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.filmHistoryId}, #{entity.filmTime}, #{entity.filmUserId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="historyId" useGeneratedKeys="true">
+        insert into movie_film_history(film_history_id, film_time, film_user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.filmHistoryId}, #{entity.filmTime}, #{entity.filmUserId})
+        </foreach>
+        on duplicate key update
+        film_history_id = values(film_history_id),
+        film_time = values(film_time),
+        film_user_id = values(film_user_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_film_history
+        <set>
+            <if test="filmHistoryId != null and filmHistoryId != ''">
+                film_history_id = #{filmHistoryId},
+            </if>
+            <if test="filmTime != null and filmTime != ''">
+                film_time = #{filmTime},
+            </if>
+            <if test="filmUserId != null and filmUserId != ''">
+                film_user_id = #{filmUserId},
+            </if>
+        </set>
+        where history_id = #{historyId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_film_history where history_id = #{historyId}
+    </delete>
+
+</mapper>
+

@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.dao.MovieUserDao">
+
+    <resultMap type="com.example.cinema.entity.MovieUser" id="MovieUserMap">
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userSerialNumber" column="user_serial_number" jdbcType="INTEGER"/>
+        <result property="userAccount" column="user_account" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userPassword" column="user_password" jdbcType="VARCHAR"/>
+        <result property="userNickname" column="user_nickname" jdbcType="VARCHAR"/>
+        <result property="userAvatar" column="user_avatar" jdbcType="VARCHAR"/>
+        <result property="userDescription" column="user_description" jdbcType="VARCHAR"/>
+        <result property="userPersonalSignature" column="user_personal_signature" jdbcType="VARCHAR"/>
+        <result property="userMailbox" column="user_mailbox" jdbcType="VARCHAR"/>
+        <result property="userGender" column="user_gender" jdbcType="INTEGER"/>
+        <result property="userOccupation" column="user_occupation" jdbcType="VARCHAR"/>
+        <result property="userTelephone" column="user_telephone" jdbcType="VARCHAR"/>
+        <result property="userCompany" column="user_company" jdbcType="VARCHAR"/>
+        <result property="userSchool" column="user_school" jdbcType="VARCHAR"/>
+        <result property="userPhotos" column="user_photos" jdbcType="VARCHAR"/>
+        <result property="userAddress" column="user_address" jdbcType="VARCHAR"/>
+        <result property="userBirthday" column="user_birthday" jdbcType="VARCHAR"/>
+        <result property="userLocation" column="user_location" jdbcType="VARCHAR"/>
+        <result property="userAttribute" column="user_attribute" jdbcType="INTEGER"/>
+        <result property="userType" column="user_type" jdbcType="INTEGER"/>
+        <result property="userStatus" column="user_status" jdbcType="INTEGER"/>
+        <result property="userLikes" column="user_likes" jdbcType="INTEGER"/>
+        <result property="userLevel" column="user_level" jdbcType="INTEGER"/>
+        <result property="userExperience" column="user_experience" jdbcType="INTEGER"/>
+        <result property="userRegistrationTime" column="user_registration_time" jdbcType="VARCHAR"/>
+        <result property="userUpdateTime" column="user_update_time" jdbcType="VARCHAR"/>
+        <result property="userSignIn" column="user_sign_in" jdbcType="INTEGER"/>
+        <result property="userLoginCount" column="user_login_count" jdbcType="VARCHAR"/>
+        <result property="userLoginTime" column="user_login_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MovieUserMap">
+        select
+          user_id, user_serial_number, user_account, user_name, user_password, user_nickname, user_avatar, user_description, user_personal_signature, user_mailbox, user_gender, user_occupation, user_telephone, user_company, user_school, user_photos, user_address, user_birthday, user_location, user_attribute, user_type, user_status, user_likes, user_level, user_experience, user_registration_time, user_update_time, user_sign_in, user_login_count, user_login_time
+        from movie_user
+        where user_id = #{userId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MovieUserMap">
+        select
+          user_id, user_serial_number, user_account, user_name, user_password, user_nickname, user_avatar, user_description, user_personal_signature, user_mailbox, user_gender, user_occupation, user_telephone, user_company, user_school, user_photos, user_address, user_birthday, user_location, user_attribute, user_type, user_status, user_likes, user_level, user_experience, user_registration_time, user_update_time, user_sign_in, user_login_count, user_login_time
+        from movie_user
+        <where>
+            <if test="MovieUserMap.userId != null and MovieUserMap.userId != ''">
+                and user_id = #{MovieUserMap.userId}
+            </if>
+            <if test="MovieUserMap.userSerialNumber != null">
+                and user_serial_number = #{MovieUserMap.userSerialNumber}
+            </if>
+            <if test="MovieUserMap.userAccount != null and MovieUserMap.userAccount != ''">
+                and user_account = #{MovieUserMap.userAccount}
+            </if>
+            <if test="MovieUserMap.userName != null and MovieUserMap.userName != ''">
+                and user_name = #{MovieUserMap.userName}
+            </if>
+            <if test="MovieUserMap.userPassword != null and MovieUserMap.userPassword != ''">
+                and user_password = #{MovieUserMap.userPassword}
+            </if>
+            <if test="MovieUserMap.userNickname != null and MovieUserMap.userNickname != ''">
+                and user_nickname = #{MovieUserMap.userNickname}
+            </if>
+            <if test="MovieUserMap.userAvatar != null and MovieUserMap.userAvatar != ''">
+                and user_avatar = #{MovieUserMap.userAvatar}
+            </if>
+            <if test="MovieUserMap.userDescription != null and MovieUserMap.userDescription != ''">
+                and user_description = #{MovieUserMap.userDescription}
+            </if>
+            <if test="MovieUserMap.userPersonalSignature != null and MovieUserMap.userPersonalSignature != ''">
+                and user_personal_signature = #{MovieUserMap.userPersonalSignature}
+            </if>
+            <if test="MovieUserMap.userMailbox != null and MovieUserMap.userMailbox != ''">
+                and user_mailbox = #{MovieUserMap.userMailbox}
+            </if>
+            <if test="MovieUserMap.userGender != null">
+                and user_gender = #{MovieUserMap.userGender}
+            </if>
+            <if test="MovieUserMap.userOccupation != null and MovieUserMap.userOccupation != ''">
+                and user_occupation = #{MovieUserMap.userOccupation}
+            </if>
+            <if test="MovieUserMap.userTelephone != null and MovieUserMap.userTelephone != ''">
+                and user_telephone = #{MovieUserMap.userTelephone}
+            </if>
+            <if test="MovieUserMap.userCompany != null and MovieUserMap.userCompany != ''">
+                and user_company = #{MovieUserMap.userCompany}
+            </if>
+            <if test="MovieUserMap.userSchool != null and MovieUserMap.userSchool != ''">
+                and user_school = #{MovieUserMap.userSchool}
+            </if>
+            <if test="MovieUserMap.userPhotos != null and MovieUserMap.userPhotos != ''">
+                and user_photos = #{MovieUserMap.userPhotos}
+            </if>
+            <if test="MovieUserMap.userAddress != null and MovieUserMap.userAddress != ''">
+                and user_address = #{MovieUserMap.userAddress}
+            </if>
+            <if test="MovieUserMap.userBirthday != null and MovieUserMap.userBirthday != ''">
+                and user_birthday = #{MovieUserMap.userBirthday}
+            </if>
+            <if test="MovieUserMap.userLocation != null and MovieUserMap.userLocation != ''">
+                and user_location = #{MovieUserMap.userLocation}
+            </if>
+            <if test="MovieUserMap.userAttribute != null">
+                and user_attribute = #{MovieUserMap.userAttribute}
+            </if>
+            <if test="MovieUserMap.userType != null">
+                and user_type = #{MovieUserMap.userType}
+            </if>
+            <if test="MovieUserMap.userStatus != null">
+                and user_status = #{MovieUserMap.userStatus}
+            </if>
+            <if test="MovieUserMap.userLikes != null">
+                and user_likes = #{MovieUserMap.userLikes}
+            </if>
+            <if test="MovieUserMap.userLevel != null">
+                and user_level = #{MovieUserMap.userLevel}
+            </if>
+            <if test="MovieUserMap.userExperience != null">
+                and user_experience = #{MovieUserMap.userExperience}
+            </if>
+            <if test="MovieUserMap.userRegistrationTime != null and MovieUserMap.userRegistrationTime != ''">
+                and user_registration_time = #{MovieUserMap.userRegistrationTime}
+            </if>
+            <if test="MovieUserMap.userUpdateTime != null and MovieUserMap.userUpdateTime != ''">
+                and user_update_time = #{MovieUserMap.userUpdateTime}
+            </if>
+            <if test="MovieUserMap.userSignIn != null">
+                and user_sign_in = #{MovieUserMap.userSignIn}
+            </if>
+            <if test="MovieUserMap.userLoginCount != null and MovieUserMap.userLoginCount != ''">
+                and user_login_count = #{MovieUserMap.userLoginCount}
+            </if>
+            <if test="MovieUserMap.userLoginTime != null and MovieUserMap.userLoginTime != ''">
+                and user_login_time = #{MovieUserMap.userLoginTime}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from movie_user
+        <where>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="userSerialNumber != null">
+                and user_serial_number = #{userSerialNumber}
+            </if>
+            <if test="userAccount != null and userAccount != ''">
+                and user_account = #{userAccount}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                and user_password = #{userPassword}
+            </if>
+            <if test="userNickname != null and userNickname != ''">
+                and user_nickname = #{userNickname}
+            </if>
+            <if test="userAvatar != null and userAvatar != ''">
+                and user_avatar = #{userAvatar}
+            </if>
+            <if test="userDescription != null and userDescription != ''">
+                and user_description = #{userDescription}
+            </if>
+            <if test="userPersonalSignature != null and userPersonalSignature != ''">
+                and user_personal_signature = #{userPersonalSignature}
+            </if>
+            <if test="userMailbox != null and userMailbox != ''">
+                and user_mailbox = #{userMailbox}
+            </if>
+            <if test="userGender != null">
+                and user_gender = #{userGender}
+            </if>
+            <if test="userOccupation != null and userOccupation != ''">
+                and user_occupation = #{userOccupation}
+            </if>
+            <if test="userTelephone != null and userTelephone != ''">
+                and user_telephone = #{userTelephone}
+            </if>
+            <if test="userCompany != null and userCompany != ''">
+                and user_company = #{userCompany}
+            </if>
+            <if test="userSchool != null and userSchool != ''">
+                and user_school = #{userSchool}
+            </if>
+            <if test="userPhotos != null and userPhotos != ''">
+                and user_photos = #{userPhotos}
+            </if>
+            <if test="userAddress != null and userAddress != ''">
+                and user_address = #{userAddress}
+            </if>
+            <if test="userBirthday != null and userBirthday != ''">
+                and user_birthday = #{userBirthday}
+            </if>
+            <if test="userLocation != null and userLocation != ''">
+                and user_location = #{userLocation}
+            </if>
+            <if test="userAttribute != null">
+                and user_attribute = #{userAttribute}
+            </if>
+            <if test="userType != null">
+                and user_type = #{userType}
+            </if>
+            <if test="userStatus != null">
+                and user_status = #{userStatus}
+            </if>
+            <if test="userLikes != null">
+                and user_likes = #{userLikes}
+            </if>
+            <if test="userLevel != null">
+                and user_level = #{userLevel}
+            </if>
+            <if test="userExperience != null">
+                and user_experience = #{userExperience}
+            </if>
+            <if test="userRegistrationTime != null and userRegistrationTime != ''">
+                and user_registration_time = #{userRegistrationTime}
+            </if>
+            <if test="userUpdateTime != null and userUpdateTime != ''">
+                and user_update_time = #{userUpdateTime}
+            </if>
+            <if test="userSignIn != null">
+                and user_sign_in = #{userSignIn}
+            </if>
+            <if test="userLoginCount != null and userLoginCount != ''">
+                and user_login_count = #{userLoginCount}
+            </if>
+            <if test="userLoginTime != null and userLoginTime != ''">
+                and user_login_time = #{userLoginTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
+        insert into movie_user(user_serial_number, user_account, user_name, user_password, user_nickname, user_avatar, user_description, user_personal_signature, user_mailbox, user_gender, user_occupation, user_telephone, user_company, user_school, user_photos, user_address, user_birthday, user_location, user_attribute, user_type, user_status, user_likes, user_level, user_experience, user_registration_time, user_update_time, user_sign_in, user_login_count, user_login_time)
+        values (#{userSerialNumber}, #{userAccount}, #{userName}, #{userPassword}, #{userNickname}, #{userAvatar}, #{userDescription}, #{userPersonalSignature}, #{userMailbox}, #{userGender}, #{userOccupation}, #{userTelephone}, #{userCompany}, #{userSchool}, #{userPhotos}, #{userAddress}, #{userBirthday}, #{userLocation}, #{userAttribute}, #{userType}, #{userStatus}, #{userLikes}, #{userLevel}, #{userExperience}, #{userRegistrationTime}, #{userUpdateTime}, #{userSignIn}, #{userLoginCount}, #{userLoginTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into movie_user(user_serial_number, user_account, user_name, user_password, user_nickname, user_avatar, user_description, user_personal_signature, user_mailbox, user_gender, user_occupation, user_telephone, user_company, user_school, user_photos, user_address, user_birthday, user_location, user_attribute, user_type, user_status, user_likes, user_level, user_experience, user_registration_time, user_update_time, user_sign_in, user_login_count, user_login_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.userSerialNumber}, #{entity.userAccount}, #{entity.userName}, #{entity.userPassword}, #{entity.userNickname}, #{entity.userAvatar}, #{entity.userDescription}, #{entity.userPersonalSignature}, #{entity.userMailbox}, #{entity.userGender}, #{entity.userOccupation}, #{entity.userTelephone}, #{entity.userCompany}, #{entity.userSchool}, #{entity.userPhotos}, #{entity.userAddress}, #{entity.userBirthday}, #{entity.userLocation}, #{entity.userAttribute}, #{entity.userType}, #{entity.userStatus}, #{entity.userLikes}, #{entity.userLevel}, #{entity.userExperience}, #{entity.userRegistrationTime}, #{entity.userUpdateTime}, #{entity.userSignIn}, #{entity.userLoginCount}, #{entity.userLoginTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into movie_user(user_serial_number, user_account, user_name, user_password, user_nickname, user_avatar, user_description, user_personal_signature, user_mailbox, user_gender, user_occupation, user_telephone, user_company, user_school, user_photos, user_address, user_birthday, user_location, user_attribute, user_type, user_status, user_likes, user_level, user_experience, user_registration_time, user_update_time, user_sign_in, user_login_count, user_login_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userSerialNumber}, #{entity.userAccount}, #{entity.userName}, #{entity.userPassword}, #{entity.userNickname}, #{entity.userAvatar}, #{entity.userDescription}, #{entity.userPersonalSignature}, #{entity.userMailbox}, #{entity.userGender}, #{entity.userOccupation}, #{entity.userTelephone}, #{entity.userCompany}, #{entity.userSchool}, #{entity.userPhotos}, #{entity.userAddress}, #{entity.userBirthday}, #{entity.userLocation}, #{entity.userAttribute}, #{entity.userType}, #{entity.userStatus}, #{entity.userLikes}, #{entity.userLevel}, #{entity.userExperience}, #{entity.userRegistrationTime}, #{entity.userUpdateTime}, #{entity.userSignIn}, #{entity.userLoginCount}, #{entity.userLoginTime})
+        </foreach>
+        on duplicate key update
+        user_serial_number = values(user_serial_number),
+        user_account = values(user_account),
+        user_name = values(user_name),
+        user_password = values(user_password),
+        user_nickname = values(user_nickname),
+        user_avatar = values(user_avatar),
+        user_description = values(user_description),
+        user_personal_signature = values(user_personal_signature),
+        user_mailbox = values(user_mailbox),
+        user_gender = values(user_gender),
+        user_occupation = values(user_occupation),
+        user_telephone = values(user_telephone),
+        user_company = values(user_company),
+        user_school = values(user_school),
+        user_photos = values(user_photos),
+        user_address = values(user_address),
+        user_birthday = values(user_birthday),
+        user_location = values(user_location),
+        user_attribute = values(user_attribute),
+        user_type = values(user_type),
+        user_status = values(user_status),
+        user_likes = values(user_likes),
+        user_level = values(user_level),
+        user_experience = values(user_experience),
+        user_registration_time = values(user_registration_time),
+        user_update_time = values(user_update_time),
+        user_sign_in = values(user_sign_in),
+        user_login_count = values(user_login_count),
+        user_login_time = values(user_login_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_user
+        <set>
+            <if test="userSerialNumber != null">
+                user_serial_number = #{userSerialNumber},
+            </if>
+            <if test="userAccount != null and userAccount != ''">
+                user_account = #{userAccount},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                user_password = #{userPassword},
+            </if>
+            <if test="userNickname != null and userNickname != ''">
+                user_nickname = #{userNickname},
+            </if>
+            <if test="userAvatar != null and userAvatar != ''">
+                user_avatar = #{userAvatar},
+            </if>
+            <if test="userDescription != null and userDescription != ''">
+                user_description = #{userDescription},
+            </if>
+            <if test="userPersonalSignature != null and userPersonalSignature != ''">
+                user_personal_signature = #{userPersonalSignature},
+            </if>
+            <if test="userMailbox != null and userMailbox != ''">
+                user_mailbox = #{userMailbox},
+            </if>
+            <if test="userGender != null">
+                user_gender = #{userGender},
+            </if>
+            <if test="userOccupation != null and userOccupation != ''">
+                user_occupation = #{userOccupation},
+            </if>
+            <if test="userTelephone != null and userTelephone != ''">
+                user_telephone = #{userTelephone},
+            </if>
+            <if test="userCompany != null and userCompany != ''">
+                user_company = #{userCompany},
+            </if>
+            <if test="userSchool != null and userSchool != ''">
+                user_school = #{userSchool},
+            </if>
+            <if test="userPhotos != null and userPhotos != ''">
+                user_photos = #{userPhotos},
+            </if>
+            <if test="userAddress != null and userAddress != ''">
+                user_address = #{userAddress},
+            </if>
+            <if test="userBirthday != null and userBirthday != ''">
+                user_birthday = #{userBirthday},
+            </if>
+            <if test="userLocation != null and userLocation != ''">
+                user_location = #{userLocation},
+            </if>
+            <if test="userAttribute != null">
+                user_attribute = #{userAttribute},
+            </if>
+            <if test="userType != null">
+                user_type = #{userType},
+            </if>
+            <if test="userStatus != null">
+                user_status = #{userStatus},
+            </if>
+            <if test="userLikes != null">
+                user_likes = #{userLikes},
+            </if>
+            <if test="userLevel != null">
+                user_level = #{userLevel},
+            </if>
+            <if test="userExperience != null">
+                user_experience = #{userExperience},
+            </if>
+            <if test="userRegistrationTime != null and userRegistrationTime != ''">
+                user_registration_time = #{userRegistrationTime},
+            </if>
+            <if test="userUpdateTime != null and userUpdateTime != ''">
+                user_update_time = #{userUpdateTime},
+            </if>
+            <if test="userSignIn != null">
+                user_sign_in = #{userSignIn},
+            </if>
+            <if test="userLoginCount != null and userLoginCount != ''">
+                user_login_count = #{userLoginCount},
+            </if>
+            <if test="userLoginTime != null and userLoginTime != ''">
+                user_login_time = #{userLoginTime},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_user where user_id = #{userId}
+    </delete>
+
+</mapper>
+

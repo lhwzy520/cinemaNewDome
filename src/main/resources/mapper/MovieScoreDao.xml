@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.dao.MovieScoreDao">
+
+    <resultMap type="com.example.cinema.entity.MovieScore" id="MovieScoreMap">
+        <result property="scoreId" column="score_id" jdbcType="VARCHAR"/>
+        <result property="filmScoreId" column="film_score_id" jdbcType="VARCHAR"/>
+        <result property="scoreGrade" column="score_grade" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MovieScoreMap">
+        select
+          score_id, film_score_id, score_grade
+        from movie_score
+        where score_id = #{scoreId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MovieScoreMap">
+        select
+          score_id, film_score_id, score_grade
+        from movie_score
+        <where>
+            <if test="MovieScoreMap.scoreId != null and MovieScoreMap.scoreId != ''">
+                and score_id = #{MovieScoreMap.scoreId}
+            </if>
+            <if test="MovieScoreMap.filmScoreId != null and MovieScoreMap.filmScoreId != ''">
+                and film_score_id = #{MovieScoreMap.filmScoreId}
+            </if>
+            <if test="MovieScoreMap.scoreGrade != null">
+                and score_grade = #{MovieScoreMap.scoreGrade}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from movie_score
+        <where>
+            <if test="scoreId != null and scoreId != ''">
+                and score_id = #{scoreId}
+            </if>
+            <if test="filmScoreId != null and filmScoreId != ''">
+                and film_score_id = #{filmScoreId}
+            </if>
+            <if test="scoreGrade != null">
+                and score_grade = #{scoreGrade}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="scoreId" useGeneratedKeys="true">
+        insert into movie_score(film_score_id, score_grade)
+        values (#{filmScoreId}, #{scoreGrade})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="scoreId" useGeneratedKeys="true">
+        insert into movie_score(film_score_id, score_grade)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.filmScoreId}, #{entity.scoreGrade})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="scoreId" useGeneratedKeys="true">
+        insert into movie_score(film_score_id, score_grade)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.filmScoreId}, #{entity.scoreGrade})
+        </foreach>
+        on duplicate key update
+        film_score_id = values(film_score_id),
+        score_grade = values(score_grade)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_score
+        <set>
+            <if test="filmScoreId != null and filmScoreId != ''">
+                film_score_id = #{filmScoreId},
+            </if>
+            <if test="scoreGrade != null">
+                score_grade = #{scoreGrade},
+            </if>
+        </set>
+        where score_id = #{scoreId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_score where score_id = #{scoreId}
+    </delete>
+
+</mapper>
+

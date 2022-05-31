@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.dao.MovieFilmDao">
+
+    <resultMap type="com.example.cinema.entity.MovieFilm" id="MovieFilmMap">
+        <result property="filmId" column="film_id" jdbcType="VARCHAR"/>
+        <result property="filmName" column="film_name" jdbcType="VARCHAR"/>
+        <result property="filmDirector" column="film_director" jdbcType="VARCHAR"/>
+        <result property="filmActor" column="film_actor" jdbcType="VARCHAR"/>
+        <result property="filmTypeId" column="film_type_id" jdbcType="VARCHAR"/>
+        <result property="filmBrief" column="film_brief" jdbcType="VARCHAR"/>
+        <result property="filmVideoUrl" column="film_video_url" jdbcType="VARCHAR"/>
+        <result property="filmSurfaceUrl" column="film_surface_url" jdbcType="VARCHAR"/>
+        <result property="filmYears" column="film_years" jdbcType="VARCHAR"/>
+        <result property="filmCreateTime" column="film_create_time" jdbcType="VARCHAR"/>
+        <result property="filmUpdateTime" column="film_update_time" jdbcType="VARCHAR"/>
+        <result property="filmUserId" column="film_user_id" jdbcType="VARCHAR"/>
+        <result property="filmWatchCount" column="film_watch_count" jdbcType="INTEGER"/>
+        <result property="filmBriefSimple" column="film_brief_simple" jdbcType="VARCHAR"/>
+        <result property="filmScoreId" column="film_score_id" jdbcType="VARCHAR"/>
+        <result property="filmGood" column="film_good" jdbcType="INTEGER"/>
+        <result property="filmClassifyId" column="film_classify_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MovieFilmMap">
+        select
+          film_id, film_name, film_director, film_actor, film_type_id, film_brief, film_video_url, film_surface_url, film_years, film_create_time, film_update_time, film_user_id, film_watch_count, film_brief_simple, film_score_id, film_good, film_classify_id
+        from movie_film
+        where film_id = #{filmId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MovieFilmMap">
+        select
+          film_id, film_name, film_director, film_actor, film_type_id, film_brief, film_video_url, film_surface_url, film_years, film_create_time, film_update_time, film_user_id, film_watch_count, film_brief_simple, film_score_id, film_good, film_classify_id
+        from movie_film
+        <where>
+            <if test="MovieFilmMap.filmId != null and MovieFilmMap.filmId != ''">
+                and film_id = #{MovieFilmMap.filmId}
+            </if>
+            <if test="MovieFilmMap.filmName != null and MovieFilmMap.filmName != ''">
+                and film_name = #{MovieFilmMap.filmName}
+            </if>
+            <if test="MovieFilmMap.filmDirector != null and MovieFilmMap.filmDirector != ''">
+                and film_director = #{MovieFilmMap.filmDirector}
+            </if>
+            <if test="MovieFilmMap.filmActor != null and MovieFilmMap.filmActor != ''">
+                and film_actor = #{MovieFilmMap.filmActor}
+            </if>
+            <if test="MovieFilmMap.filmTypeId != null and MovieFilmMap.filmTypeId != ''">
+                and film_type_id = #{MovieFilmMap.filmTypeId}
+            </if>
+            <if test="MovieFilmMap.filmBrief != null and MovieFilmMap.filmBrief != ''">
+                and film_brief = #{MovieFilmMap.filmBrief}
+            </if>
+            <if test="MovieFilmMap.filmVideoUrl != null and MovieFilmMap.filmVideoUrl != ''">
+                and film_video_url = #{MovieFilmMap.filmVideoUrl}
+            </if>
+            <if test="MovieFilmMap.filmSurfaceUrl != null and MovieFilmMap.filmSurfaceUrl != ''">
+                and film_surface_url = #{MovieFilmMap.filmSurfaceUrl}
+            </if>
+            <if test="MovieFilmMap.filmYears != null and MovieFilmMap.filmYears != ''">
+                and film_years = #{MovieFilmMap.filmYears}
+            </if>
+            <if test="MovieFilmMap.filmCreateTime != null and MovieFilmMap.filmCreateTime != ''">
+                and film_create_time = #{MovieFilmMap.filmCreateTime}
+            </if>
+            <if test="MovieFilmMap.filmUpdateTime != null and MovieFilmMap.filmUpdateTime != ''">
+                and film_update_time = #{MovieFilmMap.filmUpdateTime}
+            </if>
+            <if test="MovieFilmMap.filmUserId != null and MovieFilmMap.filmUserId != ''">
+                and film_user_id = #{MovieFilmMap.filmUserId}
+            </if>
+            <if test="MovieFilmMap.filmWatchCount != null">
+                and film_watch_count = #{MovieFilmMap.filmWatchCount}
+            </if>
+            <if test="MovieFilmMap.filmBriefSimple != null and MovieFilmMap.filmBriefSimple != ''">
+                and film_brief_simple = #{MovieFilmMap.filmBriefSimple}
+            </if>
+            <if test="MovieFilmMap.filmScoreId != null and MovieFilmMap.filmScoreId != ''">
+                and film_score_id = #{filmScoreId}
+            </if>
+            <if test="MovieFilmMap.filmGood != null">
+                and film_good = #{MovieFilmMap.filmGood}
+            </if>
+            <if test="MovieFilmMap.filmClassifyId != null and MovieFilmMap.filmClassifyId != ''">
+                and MovieFilmMap.film_classify_id = #{MovieFilmMap.filmClassifyId}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from movie_film
+        <where>
+            <if test="filmId != null and filmId != ''">
+                and film_id = #{filmId}
+            </if>
+            <if test="filmName != null and filmName != ''">
+                and film_name = #{filmName}
+            </if>
+            <if test="filmDirector != null and filmDirector != ''">
+                and film_director = #{filmDirector}
+            </if>
+            <if test="filmActor != null and filmActor != ''">
+                and film_actor = #{filmActor}
+            </if>
+            <if test="filmTypeId != null and filmTypeId != ''">
+                and film_type_id = #{filmTypeId}
+            </if>
+            <if test="filmBrief != null and filmBrief != ''">
+                and film_brief = #{filmBrief}
+            </if>
+            <if test="filmVideoUrl != null and filmVideoUrl != ''">
+                and film_video_url = #{filmVideoUrl}
+            </if>
+            <if test="filmSurfaceUrl != null and filmSurfaceUrl != ''">
+                and film_surface_url = #{filmSurfaceUrl}
+            </if>
+            <if test="filmYears != null and filmYears != ''">
+                and film_years = #{filmYears}
+            </if>
+            <if test="filmCreateTime != null and filmCreateTime != ''">
+                and film_create_time = #{filmCreateTime}
+            </if>
+            <if test="filmUpdateTime != null and filmUpdateTime != ''">
+                and film_update_time = #{filmUpdateTime}
+            </if>
+            <if test="filmUserId != null and filmUserId != ''">
+                and film_user_id = #{filmUserId}
+            </if>
+            <if test="filmWatchCount != null">
+                and film_watch_count = #{filmWatchCount}
+            </if>
+            <if test="filmBriefSimple != null and filmBriefSimple != ''">
+                and film_brief_simple = #{filmBriefSimple}
+            </if>
+            <if test="filmScoreId != null and filmScoreId != ''">
+                and film_score_id = #{filmScoreId}
+            </if>
+            <if test="filmGood != null">
+                and film_good = #{filmGood}
+            </if>
+            <if test="filmClassifyId != null and filmClassifyId != ''">
+                and film_classify_id = #{filmClassifyId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="filmId" useGeneratedKeys="true">
+        insert into movie_film(film_name, film_director, film_actor, film_type_id, film_brief, film_video_url, film_surface_url, film_years, film_create_time, film_update_time, film_user_id, film_watch_count, film_brief_simple, film_score_id, film_good, film_classify_id)
+        values (#{filmName}, #{filmDirector}, #{filmActor}, #{filmTypeId}, #{filmBrief}, #{filmVideoUrl}, #{filmSurfaceUrl}, #{filmYears}, #{filmCreateTime}, #{filmUpdateTime}, #{filmUserId}, #{filmWatchCount}, #{filmBriefSimple}, #{filmScoreId}, #{filmGood}, #{filmClassifyId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="filmId" useGeneratedKeys="true">
+        insert into movie_film(film_name, film_director, film_actor, film_type_id, film_brief, film_video_url, film_surface_url, film_years, film_create_time, film_update_time, film_user_id, film_watch_count, film_brief_simple, film_score_id, film_good, film_classify_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.filmName}, #{entity.filmDirector}, #{entity.filmActor}, #{entity.filmTypeId}, #{entity.filmBrief}, #{entity.filmVideoUrl}, #{entity.filmSurfaceUrl}, #{entity.filmYears}, #{entity.filmCreateTime}, #{entity.filmUpdateTime}, #{entity.filmUserId}, #{entity.filmWatchCount}, #{entity.filmBriefSimple}, #{entity.filmScoreId}, #{entity.filmGood}, #{entity.filmClassifyId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="filmId" useGeneratedKeys="true">
+        insert into movie_film(film_name, film_director, film_actor, film_type_id, film_brief, film_video_url, film_surface_url, film_years, film_create_time, film_update_time, film_user_id, film_watch_count, film_brief_simple, film_score_id, film_good, film_classify_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.filmName}, #{entity.filmDirector}, #{entity.filmActor}, #{entity.filmTypeId}, #{entity.filmBrief}, #{entity.filmVideoUrl}, #{entity.filmSurfaceUrl}, #{entity.filmYears}, #{entity.filmCreateTime}, #{entity.filmUpdateTime}, #{entity.filmUserId}, #{entity.filmWatchCount}, #{entity.filmBriefSimple}, #{entity.filmScoreId}, #{entity.filmGood}, #{entity.filmClassifyId})
+        </foreach>
+        on duplicate key update
+        film_name = values(film_name),
+        film_director = values(film_director),
+        film_actor = values(film_actor),
+        film_type_id = values(film_type_id),
+        film_brief = values(film_brief),
+        film_video_url = values(film_video_url),
+        film_surface_url = values(film_surface_url),
+        film_years = values(film_years),
+        film_create_time = values(film_create_time),
+        film_update_time = values(film_update_time),
+        film_user_id = values(film_user_id),
+        film_watch_count = values(film_watch_count),
+        film_brief_simple = values(film_brief_simple),
+        film_score_id = values(film_score_id),
+        film_good = values(film_good),
+        film_classify_id = values(film_classify_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_film
+        <set>
+            <if test="filmName != null and filmName != ''">
+                film_name = #{filmName},
+            </if>
+            <if test="filmDirector != null and filmDirector != ''">
+                film_director = #{filmDirector},
+            </if>
+            <if test="filmActor != null and filmActor != ''">
+                film_actor = #{filmActor},
+            </if>
+            <if test="filmTypeId != null and filmTypeId != ''">
+                film_type_id = #{filmTypeId},
+            </if>
+            <if test="filmBrief != null and filmBrief != ''">
+                film_brief = #{filmBrief},
+            </if>
+            <if test="filmVideoUrl != null and filmVideoUrl != ''">
+                film_video_url = #{filmVideoUrl},
+            </if>
+            <if test="filmSurfaceUrl != null and filmSurfaceUrl != ''">
+                film_surface_url = #{filmSurfaceUrl},
+            </if>
+            <if test="filmYears != null and filmYears != ''">
+                film_years = #{filmYears},
+            </if>
+            <if test="filmCreateTime != null and filmCreateTime != ''">
+                film_create_time = #{filmCreateTime},
+            </if>
+            <if test="filmUpdateTime != null and filmUpdateTime != ''">
+                film_update_time = #{filmUpdateTime},
+            </if>
+            <if test="filmUserId != null and filmUserId != ''">
+                film_user_id = #{filmUserId},
+            </if>
+            <if test="filmWatchCount != null">
+                film_watch_count = #{filmWatchCount},
+            </if>
+            <if test="filmBriefSimple != null and filmBriefSimple != ''">
+                film_brief_simple = #{filmBriefSimple},
+            </if>
+            <if test="filmScoreId != null and filmScoreId != ''">
+                film_score_id = #{filmScoreId},
+            </if>
+            <if test="filmGood != null">
+                film_good = #{filmGood},
+            </if>
+            <if test="filmClassifyId != null and filmClassifyId != ''">
+                film_classify_id = #{filmClassifyId},
+            </if>
+        </set>
+        where film_id = #{filmId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_film where film_id = #{filmId}
+    </delete>
+
+</mapper>
+

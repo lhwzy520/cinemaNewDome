@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.dao.MovieFileDao">
+
+    <resultMap type="com.example.cinema.entity.MovieFile" id="MovieFileMap">
+        <result property="fileId" column="file_id" jdbcType="VARCHAR"/>
+        <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+        <result property="fileSerialNumber" column="file_serial_number" jdbcType="VARCHAR"/>
+        <result property="filePath" column="file_path" jdbcType="VARCHAR"/>
+        <result property="fileUploadUserId" column="file_upload_user_id" jdbcType="VARCHAR"/>
+        <result property="fileUploadTime" column="file_upload_time" jdbcType="VARCHAR"/>
+        <result property="fileDescription" column="file_description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MovieFileMap">
+        select
+          file_id, file_name, file_serial_number, file_path, file_upload_user_id, file_upload_time, file_description
+        from movie_file
+        where file_id = #{fileId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MovieFileMap">
+        select
+          file_id, file_name, file_serial_number, file_path, file_upload_user_id, file_upload_time, file_description
+        from movie_file
+        <where>
+            <if test="MovieFileMap.fileId != null and MovieFileMap.fileId != ''">
+                and file_id = #{fileId}
+            </if>
+            <if test="MovieFileMap.fileName != null and MovieFileMap.fileName != ''">
+                and file_name = #{MovieFileMap.fileName}
+            </if>
+            <if test="MovieFileMap.fileSerialNumber != null and MovieFileMap.fileSerialNumber != ''">
+                and file_serial_number = #{MovieFileMap.fileSerialNumber}
+            </if>
+            <if test="MovieFileMap.filePath != null and MovieFileMap.filePath != ''">
+                and file_path = #{filePath}
+            </if>
+            <if test="MovieFileMap.fileUploadUserId != null and MovieFileMap.fileUploadUserId != ''">
+                and file_upload_user_id = #{fileUploadUserId}
+            </if>
+            <if test="MovieFileMap.fileUploadTime != null and MovieFileMap.fileUploadTime != ''">
+                and file_upload_time = #{MovieFileMap.fileUploadTime}
+            </if>
+            <if test="MovieFileMap.fileDescription != null and MovieFileMap.fileDescription != ''">
+                and file_description = #{MovieFileMap.fileDescription}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from movie_file
+        <where>
+            <if test="fileId != null and fileId != ''">
+                and file_id = #{fileId}
+            </if>
+            <if test="fileName != null and fileName != ''">
+                and file_name = #{fileName}
+            </if>
+            <if test="fileSerialNumber != null and fileSerialNumber != ''">
+                and file_serial_number = #{fileSerialNumber}
+            </if>
+            <if test="filePath != null and filePath != ''">
+                and file_path = #{filePath}
+            </if>
+            <if test="fileUploadUserId != null and fileUploadUserId != ''">
+                and file_upload_user_id = #{fileUploadUserId}
+            </if>
+            <if test="fileUploadTime != null and fileUploadTime != ''">
+                and file_upload_time = #{fileUploadTime}
+            </if>
+            <if test="fileDescription != null and fileDescription != ''">
+                and file_description = #{fileDescription}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="fileId" useGeneratedKeys="true">
+        insert into movie_file(file_name, file_serial_number, file_path, file_upload_user_id, file_upload_time, file_description)
+        values (#{fileName}, #{fileSerialNumber}, #{filePath}, #{fileUploadUserId}, #{fileUploadTime}, #{fileDescription})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="fileId" useGeneratedKeys="true">
+        insert into movie_file(file_name, file_serial_number, file_path, file_upload_user_id, file_upload_time, file_description)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.fileName}, #{entity.fileSerialNumber}, #{entity.filePath}, #{entity.fileUploadUserId}, #{entity.fileUploadTime}, #{entity.fileDescription})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="fileId" useGeneratedKeys="true">
+        insert into movie_file(file_name, file_serial_number, file_path, file_upload_user_id, file_upload_time, file_description)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.fileName}, #{entity.fileSerialNumber}, #{entity.filePath}, #{entity.fileUploadUserId}, #{entity.fileUploadTime}, #{entity.fileDescription})
+        </foreach>
+        on duplicate key update
+        file_name = values(file_name),
+        file_serial_number = values(file_serial_number),
+        file_path = values(file_path),
+        file_upload_user_id = values(file_upload_user_id),
+        file_upload_time = values(file_upload_time),
+        file_description = values(file_description)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_file
+        <set>
+            <if test="fileName != null and fileName != ''">
+                file_name = #{fileName},
+            </if>
+            <if test="fileSerialNumber != null and fileSerialNumber != ''">
+                file_serial_number = #{fileSerialNumber},
+            </if>
+            <if test="filePath != null and filePath != ''">
+                file_path = #{filePath},
+            </if>
+            <if test="fileUploadUserId != null and fileUploadUserId != ''">
+                file_upload_user_id = #{fileUploadUserId},
+            </if>
+            <if test="fileUploadTime != null and fileUploadTime != ''">
+                file_upload_time = #{fileUploadTime},
+            </if>
+            <if test="fileDescription != null and fileDescription != ''">
+                file_description = #{fileDescription},
+            </if>
+        </set>
+        where file_id = #{fileId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_file where file_id = #{fileId}
+    </delete>
+
+</mapper>
+
