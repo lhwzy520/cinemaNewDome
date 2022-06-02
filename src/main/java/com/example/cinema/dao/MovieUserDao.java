@@ -1,5 +1,6 @@
 package com.example.cinema.dao;
 
+import com.example.cinema.entity.MovieFilm;
 import com.example.cinema.entity.MovieUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -84,5 +85,19 @@ public interface MovieUserDao {
      */
     int deleteById(String userId);
 
+    /**
+     * 根据用户昵称 来搜索
+     * @param value  影片名
+     * @return
+     */
+    List<MovieUser> search(String value);
+
+    /**
+     * 用户登录 接口
+     * @param userName 用户账户
+     * @param password 用户密码
+     * @return
+     */
+    MovieUser userLogin(@Param("userName") String userName,@Param("password") String password);
 }
 

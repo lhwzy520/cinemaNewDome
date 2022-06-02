@@ -1,8 +1,12 @@
 package com.example.cinema.service;
 
+import com.example.cinema.entity.MovieFilm;
 import com.example.cinema.entity.MovieUser;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (MovieUser)表服务接口
@@ -53,4 +57,19 @@ public interface MovieUserService {
      */
     boolean deleteById(String userId);
 
+    /**
+     * 根据用户名称来搜索
+     * @param value  用户名
+     * @return
+     */
+    List<MovieUser> search(String value);
+
+
+    /**
+     * 用户登录 接口
+     * @param userName 用户账户
+     * @param password 用户密码
+     * @return
+     */
+    MovieUser userLogin(String userName,String password);
 }

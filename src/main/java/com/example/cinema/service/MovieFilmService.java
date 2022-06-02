@@ -4,6 +4,8 @@ import com.example.cinema.entity.MovieFilm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * (MovieFilm)表服务接口
  *
@@ -53,4 +55,11 @@ public interface MovieFilmService {
      */
     boolean deleteById(String filmId);
 
+
+    /**
+     * 根据影片名 来搜索
+     * @param value  影片名
+     * @return
+     */
+    List<MovieFilm> search(String value);
 }

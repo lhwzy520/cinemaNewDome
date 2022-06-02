@@ -1,7 +1,9 @@
 package com.example.cinema.controller;
 
+import com.example.cinema.entity.MovieFilm;
 import com.example.cinema.entity.MovieUser;
 import com.example.cinema.service.MovieUserService;
+import com.example.cinema.toolkit.R;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (MovieUser)表控制层
@@ -17,6 +20,7 @@ import javax.annotation.Resource;
  * @since 2022-05-30 11:48:01
  */
 @RestController
+@CrossOrigin
 @RequestMapping("movieUser")
 public class MovieUserController {
     /**
@@ -81,6 +85,37 @@ public class MovieUserController {
     public ResponseEntity<Boolean> deleteById(String id) {
         return ResponseEntity.ok(this.movieUserService.deleteById(id));
     }
+    /**
+     * 根据用户昵称 来搜索
+     * @param value  用户昵称
+     * @return
+     */
+    @GetMapping("/search")
+    public ResponseEntity<List<MovieUser>> search(String value) {
+        return ResponseEntity.ok(this.movieUserService.search(value));
+    }
 
+
+    /**
+     * 用户登录
+     * @param userName  用户账户
+     * @param password  用户密码
+     * @return
+     */
+    @PostMapping("/login")
+    public R userLogin(String userName,String password) {
+        System.out.println("参数介绍" + userName + ":"  + password);
+        try {
+            MovieUser user = this.movieUserService.userLogin(userName, password);
+            System.out.println("用户的显示" + user);
+            if (user.getUserId() != null){
+                return R.ok().data("data", user);
+            } else {
+                return R.error().message("登录失败,请检查账号和密码是否正确！");
+            }
+        } catch (Exception e) {
+            return R.error().message("登录失败,请检查账号和密码是否正确！");
+        }
+    }
 }
 

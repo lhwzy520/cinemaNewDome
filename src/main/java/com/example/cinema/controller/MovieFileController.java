@@ -25,6 +25,7 @@ import java.util.*;
  * @since 2022-05-30 11:48:01
  */
 @RestController
+@CrossOrigin
 @RequestMapping("movieFile")
 public class MovieFileController extends HttpServlet {
     public static final String ID = "ID"; // 传递的文件夹id名

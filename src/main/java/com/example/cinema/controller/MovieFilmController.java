@@ -1,5 +1,4 @@
 package com.example.cinema.controller;
-
 import com.example.cinema.entity.MovieFilm;
 import com.example.cinema.service.MovieFilmService;
 import org.springframework.data.domain.Page;
@@ -9,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (MovieFilm)表控制层
@@ -17,6 +17,7 @@ import javax.annotation.Resource;
  * @since 2022-05-30 11:48:01
  */
 @RestController
+@CrossOrigin
 @RequestMapping("movieFilm")
 public class MovieFilmController {
     /**
@@ -82,5 +83,14 @@ public class MovieFilmController {
         return ResponseEntity.ok(this.movieFilmService.deleteById(id));
     }
 
+    /**
+     * 根据影片名 来搜索
+     * @param value  影片名
+     * @return
+     */
+    @GetMapping("/search")
+    public ResponseEntity<List<MovieFilm>> search(String value) {
+        return ResponseEntity.ok(this.movieFilmService.search(value));
+    }
 }
 

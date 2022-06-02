@@ -1,5 +1,6 @@
 package com.example.cinema.service.impl;
 
+import com.example.cinema.entity.MovieFilm;
 import com.example.cinema.entity.MovieUser;
 import com.example.cinema.dao.MovieUserDao;
 import com.example.cinema.service.MovieUserService;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * (MovieUser)表服务实现类
@@ -35,8 +38,8 @@ public class MovieUserServiceImpl implements MovieUserService {
     /**
      * 分页查询
      *
-     * @param movieUser 筛选条件
-     * @param pageRequest      分页对象
+     * @param movieUser   筛选条件
+     * @param pageRequest 分页对象
      * @return 查询结果
      */
     @Override
@@ -53,6 +56,9 @@ public class MovieUserServiceImpl implements MovieUserService {
      */
     @Override
     public MovieUser insert(MovieUser movieUser) {
+        //设置默认注册时间
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        movieUser.setUserRegistrationTime(df.format(System.currentTimeMillis()));
         this.movieUserDao.insert(movieUser);
         return movieUser;
     }
@@ -78,5 +84,25 @@ public class MovieUserServiceImpl implements MovieUserService {
     @Override
     public boolean deleteById(String userId) {
         return this.movieUserDao.deleteById(userId) > 0;
+    }
+
+    /**
+     * 根据用户昵称 来搜索
+     * @param value  用户昵称
+     * @return 返回搜索的集合
+     */
+    @Override
+    public List<MovieUser> search(String value) {
+        return this.movieUserDao.search(value);
+    }
+    /**
+     * 用户登录 接口
+     * @param userName 用户账户
+     * @param password 用户密码
+     * @return
+     */
+    @Override
+    public MovieUser userLogin(String userName, String password) {
+        return this.movieUserDao.userLogin(userName,password);
     }
 }

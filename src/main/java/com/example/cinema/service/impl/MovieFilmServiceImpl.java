@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (MovieFilm)表服务实现类
@@ -78,5 +79,15 @@ public class MovieFilmServiceImpl implements MovieFilmService {
     @Override
     public boolean deleteById(String filmId) {
         return this.movieFilmDao.deleteById(filmId) > 0;
+    }
+
+    /**
+     * 根据影片名 来搜索
+     * @param value  影片名
+     * @return 返回搜索的集合
+     */
+    @Override
+    public List<MovieFilm> search(String value) {
+        return this.movieFilmDao.search(value);
     }
 }

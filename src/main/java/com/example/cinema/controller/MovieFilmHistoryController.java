@@ -17,6 +17,7 @@ import javax.annotation.Resource;
  * @since 2022-05-30 11:48:01
  */
 @RestController
+@CrossOrigin
 @RequestMapping("movieFilmHistory")
 public class MovieFilmHistoryController {
     /**

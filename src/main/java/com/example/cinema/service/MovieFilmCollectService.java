@@ -1,8 +1,11 @@
 package com.example.cinema.service;
 
+import com.example.cinema.entity.MovieFilm;
 import com.example.cinema.entity.MovieFilmCollect;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (MovieFilmCollect)表服务接口

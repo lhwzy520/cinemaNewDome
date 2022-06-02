@@ -84,5 +84,11 @@ public interface MovieFilmDao {
      */
     int deleteById(String filmId);
 
+    /**
+     * 根据影片名 来搜索
+     * @param value  影片名
+     * @return
+     */
+    List<MovieFilm> search(String value);
 }
 

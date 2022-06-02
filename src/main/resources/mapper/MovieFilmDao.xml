@@ -150,6 +150,11 @@
         </where>
     </select>
 
+    <!-- 根据影片名搜索 -->
+    <select id="search" resultMap="MovieFilmMap">
+        select * from movie_film where film_name like CONCAT('%', #{value}, '%')
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="filmId" useGeneratedKeys="true">
         insert into movie_film(film_name, film_director, film_actor, film_type_id, film_brief, film_video_url, film_surface_url, film_years, film_create_time, film_update_time, film_user_id, film_watch_count, film_brief_simple, film_score_id, film_good, film_classify_id)
