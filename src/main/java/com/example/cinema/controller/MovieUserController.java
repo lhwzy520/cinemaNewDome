@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (MovieUser)表控制层
@@ -37,7 +38,7 @@ public class MovieUserController {
      */
     @GetMapping("/queryByPage")
     public ResponseEntity<Page<MovieUser>> queryByPage(MovieUser movieUser,String page,String size) {
-        Sort sort = Sort.by(Sort.Direction.DESC,"rexx");
+        Sort sort = Sort.by(Sort.Direction.DESC,"userId");
         PageRequest pageRequest = PageRequest.of(Integer.parseInt(page),Integer.parseInt(size), sort);
         return ResponseEntity.ok(this.movieUserService.queryByPage(movieUser, pageRequest));
     }
@@ -85,6 +86,7 @@ public class MovieUserController {
     public ResponseEntity<Boolean> deleteById(String id) {
         return ResponseEntity.ok(this.movieUserService.deleteById(id));
     }
+
     /**
      * 根据用户昵称 来搜索
      * @param value  用户昵称

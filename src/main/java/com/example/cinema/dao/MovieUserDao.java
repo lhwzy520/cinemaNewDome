@@ -34,7 +34,7 @@ public interface MovieUserDao {
      * @param pageable         分页对象
      * @return 对象列表
      */
-    List<MovieUser> queryAllByLimit(MovieUser movieUser, @Param("pageable") Pageable pageable);
+    List<MovieUser> queryAllByLimit(@Param("MovieUserMap") MovieUser movieUser, @Param("pageable") Pageable pageable);
 
     /**
      * 统计总行数

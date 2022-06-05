@@ -132,7 +132,7 @@ public class MovieFileController extends HttpServlet {
      * @param fileName 文件名
      */
     @PostMapping("/file/delete")
-    public Boolean uploadCustomPathFile(@RequestParam("path")String path,@RequestParam("fileName")String fileName){
+    public Boolean uploadCustomPathFile(String path,String fileName){
         String paths = Constant.DIRECTORY + path +"\\" + fileName;
         return FileSystemUtils.deleteRecursively(new File(paths));
     }
